@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { 
-  UsersIcon, 
-  GlobeAltIcon, 
-  HeartIcon, 
+import {
+  UsersIcon,
+  GlobeAltIcon,
+  HeartIcon,
   ShieldCheckIcon,
   StarIcon,
   TruckIcon,
@@ -98,16 +98,19 @@ const milestones = ref([
     <section class="relative py-20 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 overflow-hidden">
       <!-- Background Pattern -->
       <div class="absolute inset-0 opacity-10">
-        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0); background-size: 20px 20px;"></div>
+        <div class="absolute inset-0"
+          style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0); background-size: 20px 20px;">
+        </div>
       </div>
-      
+
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+          <h1 class="text-3xl sm:text-6xl font-bold text-white mb-6">
             About Our Company
           </h1>
           <p class="text-xl text-primary-100 max-w-3xl mx-auto leading-relaxed">
-            We're passionate about connecting people with the best products and creating exceptional shopping experiences that inspire and delight.
+            We're passionate about connecting people with the best products and creating exceptional shopping
+            experiences that inspire and delight.
           </p>
         </div>
       </div>
@@ -135,22 +138,24 @@ const milestones = ref([
             </h2>
             <div class="space-y-4 text-gray-600 dark:text-gray-400">
               <p>
-                Founded in 2018, we started with a simple mission: to make online shopping more accessible, enjoyable, and trustworthy. What began as a small team with big dreams has grown into a global e-commerce platform serving millions of customers worldwide.
+                Founded in 2018, we started with a simple mission: to make online shopping more accessible, enjoyable,
+                and trustworthy. What began as a small team with big dreams has grown into a global e-commerce platform
+                serving millions of customers worldwide.
               </p>
               <p>
-                We believe that great shopping experiences shouldn't be complicated. That's why we've built our platform with customer needs at the center, offering a seamless journey from discovery to delivery.
+                We believe that great shopping experiences shouldn't be complicated. That's why we've built our platform
+                with customer needs at the center, offering a seamless journey from discovery to delivery.
               </p>
               <p>
-                Today, we're proud to serve customers in over 150 countries, offering a curated selection of premium products that enhance everyday life. Our commitment to quality, innovation, and customer satisfaction drives everything we do.
+                Today, we're proud to serve customers in over 150 countries, offering a curated selection of premium
+                products that enhance everyday life. Our commitment to quality, innovation, and customer satisfaction
+                drives everything we do.
               </p>
             </div>
           </div>
           <div class="relative">
-            <img 
-              src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop" 
-              alt="Our Team"
-              class="rounded-2xl shadow-2xl"
-            />
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop" alt="Our Team"
+              class="rounded-2xl shadow-2xl" />
             <div class="absolute -bottom-6 -left-6 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg">
               <div class="flex items-center space-x-2">
                 <div class="w-3 h-3 bg-green-500 rounded-full"></div>
@@ -173,10 +178,11 @@ const milestones = ref([
             These core values guide everything we do and shape the way we serve our customers.
           </p>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
           <div v-for="value in values" :key="value.title" class="text-center">
-            <div class="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4">
               <component :is="value.icon" class="h-8 w-8 text-primary-600" />
             </div>
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ value.title }}</h3>
@@ -197,16 +203,13 @@ const milestones = ref([
             The passionate individuals behind our mission to deliver exceptional shopping experiences.
           </p>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
           <div v-for="member in team" :key="member.name" class="text-center">
             <div class="relative mb-4">
-              <img 
-                :src="member.image" 
-                :alt="member.name"
-                class="w-32 h-32 rounded-full mx-auto object-cover"
-              />
-              <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+              <img :src="member.image" :alt="member.name" class="w-32 h-32 rounded-full mx-auto object-cover" />
+              <div
+                class="absolute -bottom-2 -right-2 w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
                 <StarIcon class="h-4 w-4 text-white" />
               </div>
             </div>
@@ -229,25 +232,32 @@ const milestones = ref([
             Key milestones that mark our growth and commitment to excellence.
           </p>
         </div>
-        
+
         <div class="relative">
-          <!-- Timeline Line -->
-          <div class="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-primary-200 dark:bg-primary-800"></div>
-          
-          <div class="space-y-12">
-            <div v-for="(milestone, index) in milestones" :key="milestone.year" 
-                 :class="['relative flex items-center', index % 2 === 0 ? 'flex-row' : 'flex-row-reverse']">
+          <!-- Timeline Line - Hidden on mobile -->
+          <div
+            class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-primary-200 dark:bg-primary-800">
+          </div>
+
+          <div class="space-y-6 md:space-y-12">
+            <div v-for="(milestone, index) in milestones" :key="milestone.year" :class="['relative flex items-center',
+              'flex-col md:flex-row',
+              index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse']">
               <!-- Content -->
-              <div :class="['w-1/2 p-6', index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left']">
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-                  <div class="text-2xl font-bold text-primary-600 mb-2">{{ milestone.year }}</div>
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ milestone.title }}</h3>
-                  <p class="text-gray-600 dark:text-gray-400">{{ milestone.description }}</p>
+              <div :class="['w-full md:w-1/2 p-4 md:p-6',
+                index % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8 md:text-left']">
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 md:p-6">
+                  <div class="text-xl md:text-2xl font-bold text-primary-600 mb-2">{{ milestone.year }}</div>
+                  <h3 class="text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ milestone.title
+                    }}</h3>
+                  <p class="text-sm md:text-base text-gray-600 dark:text-gray-400">{{ milestone.description }}</p>
                 </div>
               </div>
-              
-              <!-- Timeline Dot -->
-              <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary-600 rounded-full border-4 border-white dark:border-gray-800"></div>
+
+              <!-- Timeline Dot - Hidden on mobile -->
+              <div
+                class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary-600 rounded-full border-4 border-white dark:border-gray-800">
+              </div>
             </div>
           </div>
         </div>
@@ -265,34 +275,39 @@ const milestones = ref([
             Discover what makes us different and why millions of customers trust us.
           </p>
         </div>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div class="bg-white dark:bg-gray-800 rounded-lg p-6 text-center">
-            <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
               <TruckIcon class="h-6 w-6 text-green-600" />
             </div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Fast Delivery</h3>
-            <p class="text-gray-600 dark:text-gray-400">Free shipping on orders over $50 with express delivery options.</p>
+            <p class="text-gray-600 dark:text-gray-400">Free shipping on orders over $50 with express delivery options.
+            </p>
           </div>
-          
+
           <div class="bg-white dark:bg-gray-800 rounded-lg p-6 text-center">
-            <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mx-auto mb-4">
               <ShieldCheckIcon class="h-6 w-6 text-green-600" />
             </div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Secure Shopping</h3>
             <p class="text-gray-600 dark:text-gray-400">100% secure payment processing with buyer protection.</p>
           </div>
-          
+
           <div class="bg-white dark:bg-gray-800 rounded-lg p-6 text-center">
-            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
               <ChatBubbleLeftRightIcon class="h-6 w-6 text-purple-600" />
             </div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">24/7 Support</h3>
             <p class="text-gray-600 dark:text-gray-400">Round-the-clock customer support to help you anytime.</p>
           </div>
-          
+
           <div class="bg-white dark:bg-gray-800 rounded-lg p-6 text-center">
-            <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mx-auto mb-4">
               <CreditCardIcon class="h-6 w-6 text-yellow-600" />
             </div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Easy Returns</h3>
@@ -312,16 +327,12 @@ const milestones = ref([
           Join millions of satisfied customers who trust us for their shopping needs.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <router-link
-            to="/products"
-            class="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-          >
+          <router-link to="/products"
+            class="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
             Start Shopping
           </router-link>
-          <router-link
-            to="/contact"
-            class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors"
-          >
+          <router-link to="/contact"
+            class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors">
             Contact Us
           </router-link>
         </div>

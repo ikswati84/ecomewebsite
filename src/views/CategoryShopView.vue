@@ -306,7 +306,7 @@ const clearFilters = () => {
           <!-- Products Grid -->
           <div
             class="grid gap-6"
-            :class="viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'"
+            :class="viewMode === 'grid' ? 'grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'"
           >
             <ProductCard
               v-for="product in filteredProducts"
