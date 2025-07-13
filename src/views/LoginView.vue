@@ -80,16 +80,6 @@ const handleSubmit = async () => {
           create a new account
         </router-link>
       </p>
-      
-      <!-- Demo Accounts Info -->
-      <div class="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-        <h3 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">Demo Accounts:</h3>
-        <div class="space-y-1 text-xs text-blue-700 dark:text-blue-300">
-          <div><strong>Admin:</strong> admin@example.com / password</div>
-          <div><strong>Seller:</strong> seller@example.com / password</div>
-          <div><strong>Manager:</strong> manager@example.com / password</div>
-        </div>
-      </div>
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -246,6 +236,15 @@ const handleSubmit = async () => {
             </div>
           </div>
         </form>
+      </div>
+      <!-- Demo Accounts Info -->
+      <div class="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <h3 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">Demo Accounts:</h3>
+        <div class="space-y-1 text-xs text-blue-700 dark:text-blue-300">
+          <div><strong>Admin:</strong> admin@example.com / password</div>
+          <div><strong>Seller:</strong> seller@example.com / password</div>
+          <div><strong>Manager:</strong> manager@example.com / password</div>
+        </div>
       </div>
     </div>
   </div>
