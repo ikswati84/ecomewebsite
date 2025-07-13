@@ -311,7 +311,7 @@ const categories = computed(() => categoriesStore.categories)
 
         <!-- Categories Grid -->
         <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <router-link v-for="category in categories" :key="category.id" :to="`/category/${category.slug}`"
             class="group relative overflow-hidden bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 sm:hover:-translate-y-4">
             <!-- Background Pattern -->

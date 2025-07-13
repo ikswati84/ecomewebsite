@@ -18,7 +18,7 @@
             <div v-for="brand in brands" :key="brand.name + repeat" class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24
           bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
               <img :src="brand.src" :alt="brand.name"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
+                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain dark:brightness-200 dark:invert transition-all duration-300 hover:grayscale-0" />
             </div>
           </div>
         </div>
