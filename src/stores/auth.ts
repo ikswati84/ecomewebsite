@@ -148,8 +148,11 @@ export const useAuthStore = defineStore('auth', () => {
 
   // Update user settings
   const updateUserSettings = (settings: Partial<UserSettings>) => {
-    if (user.value) {
-      user.value.settings = { ...user.value.settings, ...settings }
+    if (user.value && user.value.settings) {
+      user.value.settings = { 
+        ...user.value.settings, 
+        ...settings 
+      } as UserSettings
       localStorage.setItem('userData', JSON.stringify(user.value))
     }
   }

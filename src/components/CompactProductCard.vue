@@ -12,8 +12,8 @@ interface Product {
   price: number
   originalPrice?: number
   image: string
-  rating: number
-  reviews: number
+  rating?: number
+  reviews?: number
   categoryId?: number
 }
 
@@ -95,7 +95,7 @@ const discountPercentage = computed(() => {
               v-for="i in 5" 
               :key="i" 
               class="h-3 w-3" 
-              :class="i <= product.rating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'"
+              :class="i <= (product.rating || 0) ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'"
               fill="currentColor" 
               viewBox="0 0 20 20"
             >
@@ -103,7 +103,7 @@ const discountPercentage = computed(() => {
             </svg>
           </div>
           <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">
-            ({{ product.reviews }})
+            ({{ product.reviews || 0 }})
           </span>
         </div>
       </div>
@@ -115,12 +115,12 @@ const discountPercentage = computed(() => {
           @click="toggleWishlist"
           :class="[
             'p-1.5 rounded-full transition-colors duration-200',
-            isInWishlist.value
+            isInWishlist
               ? 'text-red-500 hover:text-red-600'
               : 'text-gray-400 hover:text-red-500'
           ]"
         >
-          <HeartSolidIcon v-if="isInWishlist.value" class="h-4 w-4" />
+          <HeartSolidIcon v-if="isInWishlist" class="h-4 w-4" />
           <HeartIcon v-else class="h-4 w-4" />
         </button>
         

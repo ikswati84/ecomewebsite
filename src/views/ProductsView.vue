@@ -17,6 +17,23 @@ import { useCartStore } from '@/stores/cart'
 import { useWishlistStore } from '@/stores/wishlist'
 import { useRecentProductsStore } from '@/stores/recentProducts'
 
+// Product interface
+interface Product {
+  id: number
+  name: string
+  description: string
+  price: number
+  originalPrice?: number
+  image: string
+  rating: number
+  reviews: number
+  category: string
+  tags: string[]
+  inStock: boolean
+  isNew: boolean
+  isHot: boolean
+}
+
 // Store instances
 const cartStore = useCartStore()
 const wishlistStore = useWishlistStore()
@@ -30,7 +47,7 @@ const isInWishlist = (productId: number) => wishlistStore.isInWishlist(productId
 const isInCart = (productId: number) => cartStore.isInCart(productId)
 const isLoading = (productId: number) => loadingStates.value[productId] || false
 
-const addToCart = async (product: any) => {
+const addToCart = async (product: Product) => {
   loadingStates.value[product.id] = true
   await new Promise(resolve => setTimeout(resolve, 500))
   
@@ -44,7 +61,7 @@ const addToCart = async (product: any) => {
   loadingStates.value[product.id] = false
 }
 
-const toggleWishlist = (product: any) => {
+const toggleWishlist = (product: Product) => {
   if (isInWishlist(product.id)) {
     wishlistStore.removeFromWishlist(product.id)
   } else {
@@ -59,7 +76,7 @@ const toggleWishlist = (product: any) => {
 }
 
 // Sample products data with more variety
-const products = ref([
+const products = ref<Product[]>([
   {
     id: 1,
     name: "Premium Wireless Headphones",
@@ -235,17 +252,17 @@ const products = ref([
 ])
 
 // Filter states
-const selectedCategory = ref('All')
-const sortBy = ref('featured')
-const viewMode = ref('grid')
-const searchQuery = ref('')
-const priceRange = ref([0, 500])
-const selectedTags = ref([])
-const showFilters = ref(false)
+const selectedCategory = ref<string>('All')
+const sortBy = ref<string>('featured')
+const viewMode = ref<'grid' | 'list'>('grid')
+const searchQuery = ref<string>('')
+const priceRange = ref<[number, number]>([0, 500])
+const selectedTags = ref<string[]>([])
+const showFilters = ref<boolean>(false)
 
 // Available filters
-const categories = ['All', 'Electronics', 'Fashion', 'Home']
-const tags = ['Wireless', 'Premium', 'Gaming', 'Smart', 'Organic', 'Sustainable', 'Portable', 'Security', 'Yoga', 'RGB']
+const categories: string[] = ['All', 'Electronics', 'Fashion', 'Home']
+const tags: string[] = ['Wireless', 'Premium', 'Gaming', 'Smart', 'Organic', 'Sustainable', 'Portable', 'Security', 'Yoga', 'RGB']
 
 const filteredAndSortedProducts = computed(() => {
   let filtered = products.value

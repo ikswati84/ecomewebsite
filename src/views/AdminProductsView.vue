@@ -584,6 +584,18 @@
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
+// Product interface
+interface Product {
+  id: number
+  name: string
+  sku: string
+  category: string
+  price: number
+  stock: number
+  status: string
+  image: string
+}
+
 const authStore = useAuthStore()
 const user = computed(() => authStore.user)
 const userData = computed(() => authStore.getUserSpecificData())
@@ -619,10 +631,10 @@ const showViewModal = ref(false)
 const showDeleteModal = ref(false)
 const showToast = ref(false)
 const toastMessage = ref('')
-let toastTimeout = null
-const editingProduct = ref(null)
-const viewingProduct = ref(null)
-const deletingProduct = ref(null)
+let toastTimeout: number | null = null
+const editingProduct = ref<Product | null>(null)
+const viewingProduct = ref<Product | null>(null)
+const deletingProduct = ref<Product | null>(null)
 
 const productForm = ref({
   name: '',
@@ -635,10 +647,10 @@ const productForm = ref({
 })
 
 // Image upload related refs
-const fileInput = ref(null)
+const fileInput = ref<HTMLInputElement | null>(null)
 const isDragOver = ref(false)
 const uploadProgress = ref(0)
-const uploadStatus = ref(null)
+const uploadStatus = ref<{ type: string; message: string } | null>(null)
 
 // Computed properties
 const filteredProducts = computed(() => {
@@ -732,7 +744,7 @@ const clearFilters = () => {
 }
 
 const getStatusClass = (status: string) => {
-  const classes = {
+  const classes: Record<string, string> = {
     active: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
     inactive: 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200',
     'out-of-stock': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
@@ -740,12 +752,12 @@ const getStatusClass = (status: string) => {
   return classes[status] || classes.inactive
 }
 
-const viewProduct = (product: any) => {
+const viewProduct = (product: Product) => {
   viewingProduct.value = product
   showViewModal.value = true
 }
 
-const editProduct = (product: any) => {
+const editProduct = (product: Product) => {
   editingProduct.value = product
   productForm.value = {
     name: product.name,
@@ -759,12 +771,12 @@ const editProduct = (product: any) => {
   showEditModal.value = true
 }
 
-const deleteProduct = (product: any) => {
+const deleteProduct = (product: Product) => {
   deletingProduct.value = product
   showDeleteModal.value = true
 }
 
-const showToastMessage = (message) => {
+const showToastMessage = (message: string) => {
   toastMessage.value = message
   showToast.value = true
   if (toastTimeout) clearTimeout(toastTimeout)
@@ -782,7 +794,7 @@ const closeToast = () => {
 
 const confirmDelete = () => {
   if (deletingProduct.value) {
-    const index = products.value.findIndex(p => p.id === deletingProduct.value.id)
+    const index = products.value.findIndex(p => p.id === deletingProduct.value!.id)
     if (index > -1) {
       products.value.splice(index, 1)
       showToastMessage('Product deleted successfully!')
@@ -800,7 +812,7 @@ const saveProduct = () => {
   try {
     if (showEditModal.value && editingProduct.value) {
       // Update existing product
-      const product = products.value.find(p => p.id === editingProduct.value.id)
+      const product = products.value.find(p => p.id === editingProduct.value!.id)
       if (product) {
         Object.assign(product, {
           ...productForm.value,
@@ -810,7 +822,7 @@ const saveProduct = () => {
       }
     } else {
       // Add new product
-      const newProduct = {
+      const newProduct: Product = {
         id: Math.max(...products.value.map(p => p.id)) + 1,
         ...productForm.value,
         image: productForm.value.imagePreview || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop'
@@ -862,30 +874,34 @@ const triggerFileInput = () => {
   fileInput.value?.click()
 }
 
-const handleDragOver = (e) => {
+const handleDragOver = (e: DragEvent) => {
+  e.preventDefault()
   isDragOver.value = true
 }
 
-const handleDragLeave = (e) => {
+const handleDragLeave = (e: DragEvent) => {
+  e.preventDefault()
   isDragOver.value = false
 }
 
-const handleFileDrop = (e) => {
+const handleFileDrop = (e: DragEvent) => {
+  e.preventDefault()
   isDragOver.value = false
-  const files = e.dataTransfer.files
-  if (files.length > 0) {
+  const files = e.dataTransfer?.files
+  if (files && files.length > 0) {
     handleFile(files[0])
   }
 }
 
-const handleFileSelect = (e) => {
-  const file = e.target.files[0]
+const handleFileSelect = (e: Event) => {
+  const target = e.target as HTMLInputElement
+  const file = target.files?.[0]
   if (file) {
     handleFile(file)
   }
 }
 
-const handleFile = (file) => {
+const handleFile = (file: File) => {
   // Validate file type
   const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
   if (!validTypes.includes(file.type)) {
@@ -916,18 +932,21 @@ const handleFile = (file) => {
   }
 
   const reader = new FileReader()
-  reader.onload = (e) => {
-    productForm.value.imagePreview = e.target.result
-    uploadProgress.value = 100
-    
-    setTimeout(() => {
-      uploadStatus.value = {
-        type: 'success',
-        message: 'Image uploaded successfully!'
-      }
-      uploadProgress.value = 0
-      setTimeout(() => uploadStatus.value = null, 2000)
-    }, 500)
+  reader.onload = (e: ProgressEvent<FileReader>) => {
+    const result = e.target?.result
+    if (typeof result === 'string') {
+      productForm.value.imagePreview = result
+      uploadProgress.value = 100
+      
+      setTimeout(() => {
+        uploadStatus.value = {
+          type: 'success',
+          message: 'Image uploaded successfully!'
+        }
+        uploadProgress.value = 0
+        setTimeout(() => uploadStatus.value = null, 2000)
+      }, 500)
+    }
   }
   reader.readAsDataURL(file)
 }

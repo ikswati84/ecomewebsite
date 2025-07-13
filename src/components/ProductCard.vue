@@ -201,6 +201,7 @@ const addToRecentProducts = () => {
   recentProductsStore.addRecentProduct({
     id: props.product.id,
     name: props.product.name,
+    description: props.product.description,
     price: props.product.price,
     originalPrice: props.product.originalPrice,
     image: props.product.image,

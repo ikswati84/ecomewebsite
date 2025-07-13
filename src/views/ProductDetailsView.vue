@@ -156,6 +156,7 @@ const addToRecentProducts = () => {
   recentProductsStore.addRecentProduct({
     id: product.value.id,
     name: product.value.name,
+    description: product.value.description,
     price: product.value.price,
     originalPrice: product.value.originalPrice,
     image: product.value.images[0],

@@ -4,6 +4,7 @@ import { ref } from 'vue'
 export interface RecentProduct {
   id: number
   name: string
+  description: string
   price: number
   originalPrice?: number
   image: string
