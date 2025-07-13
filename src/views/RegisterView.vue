@@ -2,8 +2,10 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const form = ref({
   firstName: '',
@@ -62,16 +64,37 @@ const handleSubmit = async () => {
   
   isLoading.value = true
   
-  // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  
-  // In a real app, you would make an API call here
-  console.log('Register attempt:', form.value)
-  
-  isLoading.value = false
-  
-  // Redirect to home page after successful registration
-  router.push('/')
+  try {
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
+    // Register user using auth store
+    const result = authStore.register({
+      firstName: form.value.firstName,
+      lastName: form.value.lastName,
+      email: form.value.email,
+      password: form.value.password
+    })
+    
+    if (result.success) {
+      // Registration successful
+      console.log('Registration successful:', result.user)
+      
+      // Show success message (you can add a toast notification here)
+      alert('Registration successful! You can now login with your credentials.')
+      
+      // Redirect to login page
+      router.push('/login')
+    } else {
+      // Registration failed
+      alert('Registration failed. Please try again.')
+    }
+  } catch (error) {
+    console.error('Registration error:', error)
+    alert('An error occurred during registration. Please try again.')
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
 

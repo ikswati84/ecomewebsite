@@ -117,11 +117,23 @@ const router = createRouter({
       meta: { layout: 'dashboard' }
     },
     {
+      path: '/admin/users',
+      name: 'admin-users',
+      component: () => import('../views/AdminUsersView.vue'),
+      meta: { layout: 'dashboard' }
+    },
+    {
       path: '/admin/analytics',
       name: 'admin-analytics',
       component: () => import('../views/AdminAnalyticsView.vue'),
       meta: { layout: 'dashboard' }
     },
+    // 404 catch-all route
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('../views/NotFound.vue')
+    }
   ],
 })
 

@@ -239,12 +239,39 @@ export const useAuthStore = defineStore('auth', () => {
     return categories
   }
 
+  // Register function
+  const register = (userData: { firstName: string; lastName: string; email: string; password: string }) => {
+    // Simulate API call - replace with actual API
+    const newUser: User = {
+      id: Math.floor(Math.random() * 10000) + 10, // Generate random ID
+      name: `${userData.firstName} ${userData.lastName}`,
+      email: userData.email,
+      role: 'seller', // Default role for new registrations
+      avatar: `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000)}?w=150&h=150&fit=crop&crop=face`,
+      settings: {
+        theme: 'auto',
+        notifications: true,
+        emailNotifications: true,
+        language: 'en',
+        timezone: 'UTC'
+      }
+    }
+    
+    // Store user data in localStorage for demo purposes
+    const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
+    existingUsers.push(newUser)
+    localStorage.setItem('registeredUsers', JSON.stringify(existingUsers))
+    
+    return { success: true, message: 'Registration successful', user: newUser }
+  }
+
   return {
     isAuthenticated,
     user,
     checkAuth,
     login,
     logout,
+    register,
     canAccessAdmin,
     updateUserSettings,
     getUserSpecificData

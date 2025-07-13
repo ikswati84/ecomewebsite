@@ -43,7 +43,14 @@
           <button class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" @click="sidebarOpen = true">
             <i class="pi pi-bars text-gray-700 dark:text-gray-200"></i>
           </button>
-          <span class="text-xl font-bold text-primary-600 tracking-wide hidden md:block">Dashboard</span>
+          <div class="hidden md:block">
+            <span class="text-xl font-bold text-primary-600 tracking-wide">
+              {{ userRole === 'admin' ? 'Admin Dashboard' : userRole === 'seller' ? 'Seller Dashboard' : userRole === 'manager' ? 'Manager Dashboard' : 'Dashboard' }}
+            </span>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              Welcome back, {{ user?.name || 'User' }}
+            </p>
+          </div>
         </div>
         <div class="flex items-center space-x-2 md:space-x-4">
           <ThemeToggle />
@@ -163,6 +170,7 @@ import { useAuthStore } from '@/stores/auth'
 const router = useRouter()
 const authStore = useAuthStore()
 const user = computed(() => authStore.user)
+const userRole = computed(() => user.value?.role || 'admin')
 
 const sidebarOpen = ref(true)
 const dropdownOpen = ref(null)
@@ -261,14 +269,44 @@ function handleSidebarLogout() {
   authStore.logout()
 }
 
-const sidebarLinks = [
-  { label: 'Dashboard', to: '/admin/dashboard', icon: '<i class="pi pi-home"></i>', color: 'bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900 dark:to-blue-800 text-blue-600 dark:text-blue-400' },
-  { label: 'Orders', to: '/admin/orders', icon: '<i class="pi pi-shopping-cart"></i>', color: 'bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900 dark:to-green-800 text-green-600 dark:text-green-400' },
-  { label: 'Products', to: '/admin/products', icon: '<i class="pi pi-box"></i>', color: 'bg-gradient-to-br from-orange-100 to-orange-200 dark:from-orange-900 dark:to-orange-800 text-orange-600 dark:text-orange-400' },
-  { label: 'Categories', to: '/admin/categories', icon: '<i class="pi pi-tags"></i>', color: 'bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900 dark:to-purple-800 text-purple-600 dark:text-purple-400' },
-  { label: 'Customers', to: '/admin/customers', icon: '<i class="pi pi-users"></i>', color: 'bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-900 dark:to-indigo-800 text-indigo-600 dark:text-indigo-400' },
-  { label: 'Reviews', to: '/admin/reviews', icon: '<i class="pi pi-star"></i>', color: 'bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900 dark:to-yellow-800 text-yellow-600 dark:text-yellow-400' },
-  { label: 'Analytics', to: '/admin/analytics', icon: '<i class="pi pi-chart-bar"></i>', color: 'bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900 dark:to-green-800 text-green-600 dark:text-green-400' },
-  { label: 'Settings', to: '/admin/settings', icon: '<i class="pi pi-cog"></i>', color: 'bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-600 dark:text-gray-400' },
-]
+// Access Matrix Implementation
+// Based on the Access Matrix table:
+// | Feature | Admin | Manager | Seller |
+// |---------|-------|---------|--------|
+// | Dashboard | ✅ | ✅ | ✅ |
+// | Orders | ✅ | ✅ | ✅ |
+// | Products | ✅ | ✅ | ✅ |
+// | Categories | ✅ | ✅ | ✅ |
+// | Customers | ✅ | ✅ | ✅ |
+// | Reviews | ✅ | ✅ | ✅ |
+// | Analytics | ✅ | ❌ | ❌ |
+// | Settings | ✅ | ✅ | ✅ |
+
+const sidebarLinks = computed(() => {
+  // Define all possible menu items
+  const allMenuItems = [
+    { label: 'Dashboard', to: '/admin/dashboard', icon: '<i class="pi pi-home"></i>', color: 'bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900 dark:to-blue-800 text-blue-600 dark:text-blue-400' },
+    { label: 'Orders', to: '/admin/orders', icon: '<i class="pi pi-shopping-cart"></i>', color: 'bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900 dark:to-green-800 text-green-600 dark:text-green-400' },
+    { label: 'Products', to: '/admin/products', icon: '<i class="pi pi-box"></i>', color: 'bg-gradient-to-br from-orange-100 to-orange-200 dark:from-orange-900 dark:to-orange-800 text-orange-600 dark:text-orange-400' },
+    { label: 'Categories', to: '/admin/categories', icon: '<i class="pi pi-tags"></i>', color: 'bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900 dark:to-purple-800 text-purple-600 dark:text-purple-400' },
+    { label: 'Customers', to: '/admin/customers', icon: '<i class="pi pi-users"></i>', color: 'bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-900 dark:to-indigo-800 text-indigo-600 dark:text-indigo-400' },
+    { label: 'Reviews', to: '/admin/reviews', icon: '<i class="pi pi-star"></i>', color: 'bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900 dark:to-yellow-800 text-yellow-600 dark:text-yellow-400' },
+    { label: 'Users', to: '/admin/users', icon: '<i class="pi pi-user-plus"></i>', color: 'bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-900 dark:to-pink-800 text-pink-600 dark:text-pink-400' },
+    { label: 'Analytics', to: '/admin/analytics', icon: '<i class="pi pi-chart-bar"></i>', color: 'bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900 dark:to-green-800 text-green-600 dark:text-green-400' },
+    { label: 'Settings', to: '/admin/settings', icon: '<i class="pi pi-cog"></i>', color: 'bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-600 dark:text-gray-400' },
+  ]
+
+  // Access Matrix: Define what each role can access
+  const accessMatrix = {
+    admin: ['Dashboard', 'Orders', 'Products', 'Categories', 'Customers', 'Reviews', 'Users', 'Analytics', 'Settings'],
+    manager: ['Dashboard', 'Orders', 'Products', 'Categories', 'Customers', 'Reviews', 'Settings'],
+    seller: ['Dashboard', 'Orders', 'Products', 'Categories', 'Customers', 'Reviews', 'Settings']
+  }
+
+  // Get allowed items for current role
+  const allowedItems = accessMatrix[userRole] || accessMatrix.admin
+
+  // Filter menu items based on access matrix
+  return allMenuItems.filter(item => allowedItems.includes(item.label))
+})
 </script> 
