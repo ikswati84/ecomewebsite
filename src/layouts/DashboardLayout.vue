@@ -129,9 +129,9 @@
               <i class="pi pi-chevron-down h-4 w-4 text-gray-500 dark:text-gray-300"></i>
             </button>
             <div v-if="dropdownOpen === 'profile'" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
-              <router-link to="/admin/profile" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i class="pi pi-user mr-3 text-gray-500 dark:text-gray-400"></i>
-                Profile
+              <router-link to="/" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                <i class="pi pi-globe mr-3 text-gray-500 dark:text-gray-400"></i>
+                Website
               </router-link>
               <router-link to="/admin/settings" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                 <i class="pi pi-cog mr-3 text-gray-500 dark:text-gray-400"></i>

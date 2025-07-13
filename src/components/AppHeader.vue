@@ -4,7 +4,7 @@
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
         <div class="flex items-center">
-          <router-link to="/" class="flex items-center space-x-2">
+          <router-link :to="isAuthenticated ? '/admin/dashboard' : '/'" class="flex items-center space-x-2">
             <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
               <span class="text-white font-bold text-lg">B</span>
             </div>
@@ -15,11 +15,11 @@
         <!-- Navigation -->
         <nav class="hidden md:flex space-x-8">
           <router-link
-            to="/"
+            :to="isAuthenticated ? '/admin/dashboard' : '/'"
             class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 text-sm font-medium transition-colors duration-200"
             active-class="text-primary-600 dark:text-primary-400"
           >
-            Home
+            {{ isAuthenticated ? 'Dashboard' : 'Home' }}
           </router-link>
           
           <!-- Categories Dropdown -->
@@ -128,18 +128,104 @@
 
           <!-- Auth Buttons -->
           <div class="hidden md:flex items-center space-x-2">
-            <router-link
-              to="/login"
-              class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 text-sm font-medium transition-colors duration-200"
-            >
-              Sign In
-            </router-link>
-            <router-link
-              to="/register"
-              class="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors duration-200"
-            >
-              Sign Up
-            </router-link>
+            <!-- User Icon Dropdown -->
+            <div class="relative">
+              <button
+                @click="isAuthDropdownOpen = !isAuthDropdownOpen"
+                class="flex items-center space-x-2 p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+              >
+                <!-- User Avatar (when authenticated) -->
+                <div v-if="isAuthenticated" class="flex items-center space-x-2">
+                  <div :class="['w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md', getUserAvatarColor]">
+                    {{ getUserInitial }}
+                  </div>
+                  <span class="hidden lg:block text-sm font-medium text-gray-700 dark:text-gray-300">{{ user?.name }}</span>
+                </div>
+                
+                <!-- Generic User Icon (when not authenticated) -->
+                <svg v-else class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                
+                <svg class="h-4 w-4 transition-transform duration-200" :class="{ 'rotate-180': isAuthDropdownOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              <!-- Auth Dropdown -->
+              <div
+                v-if="isAuthDropdownOpen"
+                class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+              >
+                <!-- Authenticated User Options -->
+                <div v-if="isAuthenticated">
+                  <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ user?.name }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ user?.email }}</p>
+                  </div>
+                  
+                  <router-link
+                    to="/admin/dashboard"
+                    class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                    @click="isAuthDropdownOpen = false"
+                  >
+                    <svg class="h-5 w-5 mr-3 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z" />
+                    </svg>
+                    Dashboard
+                  </router-link>
+                  
+                  <router-link
+                    to="/admin/settings"
+                    class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                    @click="isAuthDropdownOpen = false"
+                  >
+                    <svg class="h-5 w-5 mr-3 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Settings
+                  </router-link>
+                  
+                  <div class="border-t border-gray-200 dark:border-gray-700"></div>
+                  
+                  <button
+                    @click="handleLogout"
+                    class="flex items-center w-full px-4 py-3 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                  >
+                    <svg class="h-5 w-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Logout
+                  </button>
+                </div>
+                
+                <!-- Non-authenticated User Options -->
+                <div v-else>
+                  <router-link
+                    to="/login"
+                    class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                    @click="isAuthDropdownOpen = false"
+                  >
+                    <svg class="h-5 w-5 mr-3 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                    Login
+                  </router-link>
+                  <router-link
+                    to="/register"
+                    class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                    @click="isAuthDropdownOpen = false"
+                  >
+                    <svg class="h-5 w-5 mr-3 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                    Register
+                  </router-link>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Mobile menu button -->
@@ -157,12 +243,12 @@
       <div v-if="isMobileMenuOpen" class="md:hidden">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200 dark:border-gray-700">
           <router-link
-            to="/"
+            :to="isAuthenticated ? '/admin/dashboard' : '/'"
             class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium transition-colors duration-200"
             active-class="text-primary-600 dark:text-primary-400"
             @click="isMobileMenuOpen = false"
           >
-            Home
+            {{ isAuthenticated ? 'Dashboard' : 'Home' }}
           </router-link>
           
           <!-- Mobile Categories -->
@@ -216,22 +302,83 @@
           >
             Wishlist ({{ wishlistCount }})
           </router-link>
-          <router-link
-            to="/login"
-            class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium transition-colors duration-200"
-            active-class="text-primary-600 dark:text-primary-400"
-            @click="isMobileMenuOpen = false"
-          >
-            Sign In
-          </router-link>
-          <router-link
-            to="/register"
-            class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium transition-colors duration-200"
-            active-class="text-primary-600 dark:text-primary-400"
-            @click="isMobileMenuOpen = false"
-          >
-            Sign Up
-          </router-link>
+          <!-- Mobile Auth Section -->
+          <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+            <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3 px-3">Account</h3>
+            
+            <!-- Authenticated User Mobile Options -->
+            <div v-if="isAuthenticated">
+              <div class="px-3 py-2 mb-3">
+                <div class="flex items-center space-x-3">
+                  <div :class="['w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md', getUserAvatarColor]">
+                    {{ getUserInitial }}
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ user?.name }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ user?.email }}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <router-link
+                to="/admin/dashboard"
+                class="flex items-center space-x-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                @click="isMobileMenuOpen = false"
+              >
+                <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z" />
+                </svg>
+                <span>Dashboard</span>
+              </router-link>
+              
+              <router-link
+                to="/admin/settings"
+                class="flex items-center space-x-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                @click="isMobileMenuOpen = false"
+              >
+                <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>Settings</span>
+              </router-link>
+              
+              <button
+                @click="handleLogout; isMobileMenuOpen = false"
+                class="flex items-center w-full space-x-3 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+              >
+                <svg class="h-5 w-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                <span>Logout</span>
+              </button>
+            </div>
+            
+            <!-- Non-authenticated User Mobile Options -->
+            <div v-else>
+              <router-link
+                to="/login"
+                class="flex items-center space-x-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                @click="isMobileMenuOpen = false"
+              >
+                <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+                <span>Login</span>
+              </router-link>
+              <router-link
+                to="/register"
+                class="flex items-center space-x-3 px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                @click="isMobileMenuOpen = false"
+              >
+                <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+                <span>Register</span>
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -245,16 +392,48 @@ import ThemeToggle from './ThemeToggle.vue'
 import ShoppingCart from './ShoppingCart.vue'
 import { useWishlistStore } from '@/stores/wishlist'
 import { useCategoriesStore } from '@/stores/categories'
+import { useAuthStore } from '@/stores/auth'
 
 const isMobileMenuOpen = ref(false)
+const isAuthDropdownOpen = ref(false)
 const wishlistStore = useWishlistStore()
 const categoriesStore = useCategoriesStore()
+const authStore = useAuthStore()
 
 const wishlistCount = computed(() => wishlistStore.items.length)
 const categories = computed(() => categoriesStore.categories)
+const isAuthenticated = computed(() => authStore.isAuthenticated)
+const user = computed(() => authStore.user)
+
+// Get user initial for avatar
+const getUserInitial = computed(() => {
+  if (!user.value?.name) return 'U'
+  return user.value.name.charAt(0).toUpperCase()
+})
+
+// Get user avatar background color based on role
+const getUserAvatarColor = computed(() => {
+  if (!user.value?.role) return 'bg-gray-500'
+  
+  switch (user.value.role) {
+    case 'admin':
+      return 'bg-red-500'
+    case 'seller':
+      return 'bg-blue-500'
+    case 'manager':
+      return 'bg-green-500'
+    default:
+      return 'bg-gray-500'
+  }
+})
 
 const closeDropdown = () => {
   // This function ensures the dropdown closes when a link is clicked
   // The dropdown is controlled by CSS hover, so this is mainly for mobile/touch devices
+}
+
+const handleLogout = () => {
+  authStore.logout()
+  isAuthDropdownOpen.value = false
 }
 </script> 
