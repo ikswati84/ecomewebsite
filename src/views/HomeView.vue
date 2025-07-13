@@ -94,7 +94,7 @@ const categories = computed(() => categoriesStore.categories)
       <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-primary-300/30 rounded-full blur-lg"></div>
 
       <div class="relative z-10 w-full py-16 lg:py-24">
-        <div class="grid grid-cols-2 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <!-- Left Content -->
           <div class="text-center lg:text-left">
             <div
@@ -272,7 +272,7 @@ const categories = computed(() => categoriesStore.categories)
         </router-link>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+      <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         <ProductCard v-for="product in featuredProducts" :key="product.id" :product="product" />
       </div>
     </section>
