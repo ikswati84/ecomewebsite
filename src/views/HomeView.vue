@@ -296,7 +296,7 @@ const categories = computed(() => categoriesStore.categories)
         </div>
 
         <!-- Categories Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <router-link v-for="category in categories" :key="category.id" :to="`/category/${category.slug}`"
             class="group relative overflow-hidden bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4">
             <!-- Background Pattern -->
@@ -316,7 +316,7 @@ const categories = computed(() => categoriesStore.categories)
               <!-- Category Badge -->
               <div class="absolute top-4 left-4">
                 <span
-                  class="bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-white text-xs px-3 py-1 rounded-full font-medium backdrop-blur-sm">
+                  class="bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-white text-[10px] lg:text-xs px-3 py-1 rounded-full font-medium backdrop-blur-sm">
                   {{ category.productCount }} Products
                 </span>
               </div>
@@ -325,8 +325,8 @@ const categories = computed(() => categoriesStore.categories)
               <div
                 class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
                 <div
-                  class="w-10 h-10 bg-white/90 dark:bg-gray-800/90 rounded-full flex items-center justify-center backdrop-blur-sm">
-                  <ArrowRightIcon class="h-5 w-5 text-primary-600" />
+                  class="w-8 h-8 lg:w-10 lg:h-10 bg-white/90 dark:bg-gray-800/90 rounded-full flex items-center justify-center backdrop-blur-sm">
+                  <ArrowRightIcon class="h-4 w-4 lg:h-5 lg:w-5 text-primary-600" />
                 </div>
               </div>
             </div>
@@ -334,22 +334,22 @@ const categories = computed(() => categoriesStore.categories)
             <!-- Content -->
             <div class="p-6">
               <h3
-                class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
+                class="text-base lg:text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
                 {{ category.name }}
               </h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
+              <p class="text-gray-600 dark:text-gray-400 text-[10px] lg:text-sm leading-relaxed mb-4">
                 {{ category.description }}
               </p>
 
               <!-- Explore Button -->
               <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-500 dark:text-gray-400">
+                <span class="text-xs lg:text-sm text-gray-500 dark:text-gray-400">
                   Explore Collection
                 </span>
                 <div
-                  class="w-8 h-8 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center group-hover:bg-primary-600 transition-colors duration-300">
+                  class="w-6 h-6 lg:w-8 lg:h-8 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center group-hover:bg-primary-600 transition-colors duration-300">
                   <ArrowRightIcon
-                    class="h-4 w-4 text-primary-600 group-hover:text-white transition-colors duration-300" />
+                    class="h-3 w-3 lg:h-4 lg:w-4 text-primary-600 group-hover:text-white transition-colors duration-300" />
                 </div>
               </div>
             </div>
