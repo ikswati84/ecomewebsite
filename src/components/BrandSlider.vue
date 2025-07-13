@@ -12,120 +12,12 @@
 
       <div class="relative overflow-hidden">
         <div class="flex animate-scroll">
-          <!-- First set of logos -->
-          <div class="flex space-x-4 sm:space-x-12 lg:space-x-10 items-center min-w-max">
-            <!-- iPhone/Apple Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/apple.png" alt="Apple"
-                class="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 object-contain" />
-            </div>
+          <div v-for="repeat in 2" :key="'loop-' + repeat"
+            class="flex items-center min-w-max pl-1 pr-1 sm:pl-2 sm:pr-2 lg:pl-3 lg:pr-3 space-x-2 sm:space-x-4 lg:space-x-6">
 
-            <!-- Samsung Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/samsung.png" alt="Samsung"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Adidas Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/adidas.png" alt="Adidas"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Nike Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/nike.png" alt="Nike"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Gucci Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/gucci.png" alt="Gucci"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Louis Vuitton Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/louis-vuitton.png" alt="Louis Vuitton"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Chanel Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/chanel.png" alt="Chanel"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Dior Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/dior.png" alt="Dior"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-          </div>
-
-          <!-- Duplicate set for seamless loop -->
-          <div class="flex space-x-8 sm:space-x-12 lg:space-x-20 items-center min-w-max">
-            <!-- iPhone/Apple Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/apple.png" alt="Apple"
-                class="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Samsung Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/samsung.png" alt="Samsung"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Adidas Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/adidas.png" alt="Adidas"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Nike Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/nike.png" alt="Nike"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Gucci Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/gucci.png" alt="Gucci"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Louis Vuitton Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/louis-vuitton.png" alt="Louis Vuitton"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Chanel Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/chanel.png" alt="Chanel"
-                class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
-            </div>
-
-            <!-- Dior Logo -->
-            <div
-              class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              <img src="/images/brands/dior.png" alt="Dior"
+            <div v-for="brand in brands" :key="brand.name + repeat" class="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 lg:w-40 lg:h-24
+          bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+              <img :src="brand.src" :alt="brand.name"
                 class="w-16 h-12 sm:w-20 sm:h-16 lg:w-24 lg:h-20 object-contain" />
             </div>
           </div>
@@ -136,13 +28,22 @@
 </template>
 
 <script setup lang="ts">
-// Component logic can be added here if needed
+const brands = [
+  { name: "Apple", src: "/images/brands/apple.png" },
+  { name: "Samsung", src: "/images/brands/samsung.png" },
+  { name: "Adidas", src: "/images/brands/adidas.png" },
+  { name: "Nike", src: "/images/brands/nike.png" },
+  { name: "Gucci", src: "/images/brands/gucci.png" },
+  { name: "Louis Vuitton", src: "/images/brands/louis-vuitton.png" },
+  { name: "Chanel", src: "/images/brands/chanel.png" },
+  { name: "Dior", src: "/images/brands/dior.png" }
+];
 </script>
 
 <style scoped>
 @keyframes scroll {
   0% {
-    transform: translateX(0);
+    transform: translateX(0%);
   }
 
   100% {
@@ -151,24 +52,24 @@
 }
 
 .animate-scroll {
-  animation: scroll 40s linear infinite;
+  display: flex;
+  width: max-content;
+  animation: scroll 20s linear infinite;
 }
 
-/* Pause animation on hover */
 .animate-scroll:hover {
   animation-play-state: paused;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .animate-scroll {
-    animation-duration: 25s;
+    animation-duration: 15s;
   }
 }
 
 @media (max-width: 640px) {
   .animate-scroll {
-    animation-duration: 20s;
+    animation-duration: 10s;
   }
 }
 </style>
