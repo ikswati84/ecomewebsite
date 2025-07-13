@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import ProductCard from '@/components/ProductCard.vue'
-import { 
-  FunnelIcon, 
-  Squares2X2Icon, 
-  Bars3Icon, 
+import {
+  FunnelIcon,
+  Squares2X2Icon,
+  Bars3Icon,
   MagnifyingGlassIcon,
   AdjustmentsHorizontalIcon,
   StarIcon,
@@ -50,14 +50,14 @@ const isLoading = (productId: number) => loadingStates.value[productId] || false
 const addToCart = async (product: Product) => {
   loadingStates.value[product.id] = true
   await new Promise(resolve => setTimeout(resolve, 500))
-  
+
   cartStore.addToCart({
     id: product.id,
     name: product.name,
     price: product.price,
     image: product.image
   })
-  
+
   loadingStates.value[product.id] = false
 }
 
@@ -266,33 +266,33 @@ const tags: string[] = ['Wireless', 'Premium', 'Gaming', 'Smart', 'Organic', 'Su
 
 const filteredAndSortedProducts = computed(() => {
   let filtered = products.value
-  
+
   // Filter by search query
   if (searchQuery.value) {
-    filtered = filtered.filter(product => 
+    filtered = filtered.filter(product =>
       product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       product.description.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       product.tags.some(tag => tag.toLowerCase().includes(searchQuery.value.toLowerCase()))
     )
   }
-  
+
   // Filter by category
   if (selectedCategory.value !== 'All') {
     filtered = filtered.filter(product => product.category === selectedCategory.value)
   }
-  
+
   // Filter by price range
-  filtered = filtered.filter(product => 
+  filtered = filtered.filter(product =>
     product.price >= priceRange.value[0] && product.price <= priceRange.value[1]
   )
-  
+
   // Filter by tags
   if (selectedTags.value.length > 0) {
-    filtered = filtered.filter(product => 
+    filtered = filtered.filter(product =>
       product.tags.some(tag => selectedTags.value.includes(tag))
     )
   }
-  
+
   // Sort products
   switch (sortBy.value) {
     case 'price-low':
@@ -337,39 +337,27 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
           <div class="flex-1 max-w-md">
             <div class="relative">
               <MagnifyingGlassIcon class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <input
-                v-model="searchQuery"
-                type="text"
-                placeholder="Search products..."
-                class="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-              />
+              <input v-model="searchQuery" type="text" placeholder="Search products..."
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white" />
             </div>
           </div>
 
           <!-- Filter Toggle -->
           <div class="flex items-center space-x-4">
-            <button
-              @click="showFilters = !showFilters"
-              class="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-            >
+            <button @click="showFilters = !showFilters"
+              class="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
               <AdjustmentsHorizontalIcon class="h-5 w-5" />
               <span class="text-sm font-medium">Filters</span>
             </button>
 
             <!-- View Mode Toggle -->
             <div class="flex items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
-              <button
-                @click="viewMode = 'grid'"
-                class="p-2 rounded-md transition-colors duration-200"
-                :class="viewMode === 'grid' ? 'bg-white dark:bg-gray-600 shadow-sm' : 'text-gray-600 dark:text-gray-400'"
-              >
+              <button @click="viewMode = 'grid'" class="p-2 rounded-md transition-colors duration-200"
+                :class="viewMode === 'grid' ? 'bg-white dark:bg-gray-600 shadow-sm' : 'text-gray-600 dark:text-gray-400'">
                 <Squares2X2Icon class="h-4 w-4" />
               </button>
-              <button
-                @click="viewMode = 'list'"
-                class="p-2 rounded-md transition-colors duration-200"
-                :class="viewMode === 'list' ? 'bg-white dark:bg-gray-600 shadow-sm' : 'text-gray-600 dark:text-gray-400'"
-              >
+              <button @click="viewMode = 'list'" class="p-2 rounded-md transition-colors duration-200"
+                :class="viewMode === 'list' ? 'bg-white dark:bg-gray-600 shadow-sm' : 'text-gray-600 dark:text-gray-400'">
                 <Bars3Icon class="h-4 w-4" />
               </button>
             </div>
@@ -382,10 +370,8 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
             <!-- Category Filter -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
-              <select
-                v-model="selectedCategory"
-                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-              >
+              <select v-model="selectedCategory"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
                 <option v-for="category in categories" :key="category" :value="category">
                   {{ category }}
                 </option>
@@ -395,10 +381,8 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
             <!-- Sort Filter -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sort By</label>
-              <select
-                v-model="sortBy"
-                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-              >
+              <select v-model="sortBy"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
                 <option value="featured">Featured</option>
                 <option value="newest">Newest</option>
                 <option value="price-low">Price: Low to High</option>
@@ -413,31 +397,22 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Price Range: ${{ priceRange[0] }} - ${{ priceRange[1] }}
               </label>
-              <input
-                type="range"
-                v-model="priceRange[1]"
-                min="0"
-                max="500"
-                step="10"
-                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-              />
+              <input type="range" v-model="priceRange[1]" min="0" max="500" step="10"
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider" />
             </div>
 
             <!-- Tags Filter -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tags</label>
               <div class="flex flex-wrap gap-2">
-                <button
-                  v-for="tag in tags"
-                  :key="tag"
+                <button v-for="tag in tags" :key="tag"
                   @click="selectedTags.includes(tag) ? selectedTags = selectedTags.filter(t => t !== tag) : selectedTags.push(tag)"
                   :class="[
                     'px-3 py-1 text-xs rounded-full transition-colors',
                     selectedTags.includes(tag)
                       ? 'bg-primary-600 text-white'
                       : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-                  ]"
-                >
+                  ]">
                   {{ tag }}
                 </button>
               </div>
@@ -461,50 +436,40 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
         <div class="hidden md:flex items-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
           <div class="flex items-center space-x-1">
             <SparklesIcon class="h-4 w-4" />
-            <span>{{ products.filter(p => p.isNew).length }} New</span>
+            <span>{{products.filter(p => p.isNew).length}} New</span>
           </div>
           <div class="flex items-center space-x-1">
             <FireIcon class="h-4 w-4" />
-            <span>{{ products.filter(p => p.isHot).length }} Hot</span>
+            <span>{{products.filter(p => p.isHot).length}} Hot</span>
           </div>
           <div class="flex items-center space-x-1">
             <StarIcon class="h-4 w-4" />
-            <span>{{ products.filter(p => p.rating >= 4.5).length }} Top Rated</span>
+            <span>{{products.filter(p => p.rating >= 4.5).length}} Top Rated</span>
           </div>
         </div>
       </div>
 
       <!-- Products Grid -->
-      <div
-        class="grid gap-6"
-        :class="viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'"
-      >
+      <div class="grid gap-6"
+        :class="viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'">
         <!-- Grid View -->
         <template v-if="viewMode === 'grid'">
-          <ProductCard
-            v-for="product in filteredAndSortedProducts"
-            :key="product.id"
-            :product="product"
-          />
+          <ProductCard v-for="product in filteredAndSortedProducts" :key="product.id" :product="product" />
         </template>
 
         <!-- List View -->
         <template v-else>
-          <div 
-            v-for="product in filteredAndSortedProducts" 
-            :key="product.id"
-            class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden group hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
+          <div v-for="product in filteredAndSortedProducts" :key="product.id"
+            class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div class="flex flex-col lg:flex-row">
               <!-- Product Image -->
-              <div class="relative lg:w-80 lg:h-64 h-64 lg:h-auto overflow-hidden bg-gray-200 dark:bg-gray-700">
-                <img
-                  :src="product.image"
-                  :alt="product.name"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
-                
+              <div class="relative lg:w-80 h-64 lg:h-auto overflow-hidden bg-gray-200 dark:bg-gray-700">
+                <img :src="product.image" :alt="product.name"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div
+                  class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300">
+                </div>
+
                 <!-- Badges -->
                 <div class="absolute top-3 left-3 flex flex-col space-y-2">
                   <span v-if="product.isNew" class="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-medium">
@@ -513,14 +478,16 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
                   <span v-if="product.isHot" class="bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium">
                     HOT
                   </span>
-                  <span v-if="product.originalPrice" class="bg-primary-600 text-white text-xs px-2 py-1 rounded-full font-medium">
+                  <span v-if="product.originalPrice"
+                    class="bg-primary-600 text-white text-xs px-2 py-1 rounded-full font-medium">
                     -{{ Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) }}%
                   </span>
                 </div>
 
                 <!-- Stock Status -->
                 <div class="absolute top-3 right-3">
-                  <span v-if="!product.inStock" class="bg-gray-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+                  <span v-if="!product.inStock"
+                    class="bg-gray-500 text-white text-xs px-2 py-1 rounded-full font-medium">
                     OUT OF STOCK
                   </span>
                 </div>
@@ -531,18 +498,16 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
                 <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
                   <div class="flex-1">
                     <router-link :to="`/product/${product.id}`" class="block">
-                      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                      <h3
+                        class="text-xl font-bold text-gray-900 dark:text-white mb-2 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
                         {{ product.name }}
                       </h3>
                     </router-link>
-                    
+
                     <!-- Tags -->
                     <div v-if="product.tags && product.tags.length > 0" class="flex flex-wrap gap-2 mb-3">
-                      <span 
-                        v-for="tag in product.tags" 
-                        :key="tag"
-                        class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-full"
-                      >
+                      <span v-for="tag in product.tags" :key="tag"
+                        class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-3 py-1 rounded-full">
                         {{ tag }}
                       </span>
                     </div>
@@ -561,10 +526,11 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
                           ${{ product.originalPrice }}
                         </span>
                       </div>
-                      
+
                       <div class="flex items-center space-x-1">
                         <div class="flex text-yellow-400">
-                          <StarIcon v-for="i in 5" :key="i" class="h-4 w-4" :class="i <= product.rating ? 'text-yellow-400' : 'text-gray-300'" />
+                          <StarIcon v-for="i in 5" :key="i" class="h-4 w-4"
+                            :class="i <= product.rating ? 'text-yellow-400' : 'text-gray-300'" />
                         </div>
                         <span class="text-sm text-gray-500 ml-1">({{ product.reviews }})</span>
                       </div>
@@ -575,56 +541,48 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
                 <!-- Action Buttons -->
                 <div class="flex items-center justify-between mt-auto">
                   <div class="flex items-center space-x-3">
-                    <router-link
-                      :to="`/product/${product.id}`"
-                      class="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-                    >
+                    <router-link :to="`/product/${product.id}`"
+                      class="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                       <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
                       <span>View Details</span>
                     </router-link>
 
-                    <button 
-                      @click="toggleWishlist(product)"
+                    <button @click="toggleWishlist(product)"
                       class="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-                      :class="isInWishlist(product.id) ? 'text-red-500' : 'text-gray-700 dark:text-gray-300'"
-                    >
+                      :class="isInWishlist(product.id) ? 'text-red-500' : 'text-gray-700 dark:text-gray-300'">
                       <HeartIcon class="h-4 w-4" :class="isInWishlist(product.id) ? 'fill-current' : ''" />
                       <span>{{ isInWishlist(product.id) ? 'Remove' : 'Wishlist' }}</span>
                     </button>
                   </div>
 
                   <div class="flex items-center space-x-3">
-                    <button
-                      v-if="!isInCart(product.id) && product.inStock"
-                      @click="addToCart(product)"
+                    <button v-if="!isInCart(product.id) && product.inStock" @click="addToCart(product)"
                       class="flex items-center space-x-2 px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors"
-                      :disabled="isLoading(product.id)"
-                    >
+                      :disabled="isLoading(product.id)">
                       <ShoppingCartIcon v-if="!isLoading(product.id)" class="h-4 w-4" />
-                      <div v-else class="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div v-else class="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin">
+                      </div>
                       <span>{{ isLoading(product.id) ? 'Adding...' : 'Add to Cart' }}</span>
                     </button>
-                    
-                    <router-link
-                      v-else-if="isInCart(product.id)"
-                      to="/checkout"
-                      class="flex items-center space-x-2 px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors"
-                    >
+
+                    <router-link v-else-if="isInCart(product.id)" to="/checkout"
+                      class="flex items-center space-x-2 px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors">
                       <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                       </svg>
                       <span>View Cart</span>
                     </router-link>
 
-                    <button
-                      v-else
-                      disabled
-                      class="flex items-center space-x-2 px-6 py-3 bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 rounded-lg font-semibold cursor-not-allowed"
-                    >
+                    <button v-else disabled
+                      class="flex items-center space-x-2 px-6 py-3 bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 rounded-lg font-semibold cursor-not-allowed">
                       <span>Out of Stock</span>
                     </button>
                   </div>
@@ -642,17 +600,16 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
         <p class="text-gray-500 dark:text-gray-400 mb-6 max-w-md mx-auto">
           Try adjusting your search criteria or filters to find what you're looking for.
         </p>
-        <button
-          @click="searchQuery = ''; selectedCategory = 'All'; selectedTags = []; priceRange = [0, 500]"
-          class="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors"
-        >
+        <button @click="searchQuery = ''; selectedCategory = 'All'; selectedTags = []; priceRange = [0, 500]"
+          class="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors">
           Clear All Filters
         </button>
       </div>
 
       <!-- Load More Button -->
       <div v-if="filteredAndSortedProducts.length > 0" class="text-center mt-12">
-        <button class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-8 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+        <button
+          class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-8 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
           Load More Products
         </button>
       </div>
@@ -691,4 +648,4 @@ const productCount = computed(() => filteredAndSortedProducts.value.length)
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-</style> 
+</style>
